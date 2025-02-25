@@ -1,9 +1,12 @@
-﻿namespace OblivionEngine;
+﻿using OblivionEngine.Core;
 
-class Program
+namespace OblivionEngine;
+
+class Oblivion
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Game game = new Game();
+        game.Start(args);
     }
 }

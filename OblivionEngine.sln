@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OblivionEngine", "OblivionEngine\OblivionEngine.csproj", "{19267A2C-AE32-4CC8-A940-757630642369}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "build", "build\build.csproj", "{6274E481-8F5E-408C-A02F-676D85F291E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndianBinarySystem", "EndianBinarySystem\EndianBinarySystem.csproj", "{0FC76F8A-E1AF-4A2D-A60D-B5B549FF4619}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{19267A2C-AE32-4CC8-A940-757630642369}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19267A2C-AE32-4CC8-A940-757630642369}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19267A2C-AE32-4CC8-A940-757630642369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6274E481-8F5E-408C-A02F-676D85F291E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6274E481-8F5E-408C-A02F-676D85F291E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6274E481-8F5E-408C-A02F-676D85F291E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6274E481-8F5E-408C-A02F-676D85F291E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC76F8A-E1AF-4A2D-A60D-B5B549FF4619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC76F8A-E1AF-4A2D-A60D-B5B549FF4619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC76F8A-E1AF-4A2D-A60D-B5B549FF4619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC76F8A-E1AF-4A2D-A60D-B5B549FF4619}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,18 +5,22 @@ using Newtonsoft.Json.Converters;
 namespace OblivionEngine.GameSystems;
 
 [JsonConverter(typeof(StringEnumConverter))]
-public enum LocationTypes
+public enum LocationZones
 {
-    [EnumMember(Value = "town")]
-    Town,
-    [EnumMember(Value = "city")]
-    City,
-    [EnumMember(Value = "transit")]
-    Transit,
-    [EnumMember(Value = "passage")]
-    Passage,
-    [EnumMember(Value = "keystone")]
-    Keystone,
-    [EnumMember(Value = "landmark")]
-    Landmark
+    [EnumMember(Value = "AurelianZone")]
+    Aurelian,
+    [EnumMember(Value = "MountAethoriaZone")]
+    MountAethoria,
+    [EnumMember(Value = "OpeningZone")]
+    Opening,
+    [EnumMember(Value = "ScorchedZone")]
+    Scorched,
+    [EnumMember(Value = "SubmergedZone")]
+    Submerged,
+    [EnumMember(Value = "TidecliffZone")]
+    Tidecliff,
+    [EnumMember(Value = "VoltwoodZone")]
+    Voltwood,
+    [EnumMember(Value = "ZenithZone")]
+    Zenith
 }

@@ -1,6 +1,12 @@
-﻿namespace OblivionEngine.GameSystems;
+﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-public class BuildingTypes
+namespace OblivionEngine.GameSystems;
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum BuildingTypes
 {
-    
+    [EnumMember(Value = "house")]
+    House
 }

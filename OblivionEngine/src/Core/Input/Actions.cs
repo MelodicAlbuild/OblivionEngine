@@ -2,5 +2,9 @@
 
 public enum Actions
 {
-    
+    MoveLeft,
+    MoveRight,
+    MoveUp,
+    MoveDown,
+    Sprint,
 }

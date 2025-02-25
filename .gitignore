@@ -3,3 +3,14 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+.nuke/temp/
+
+Aethoria Region.graphml
+
+OblivionEngine.sln.DotSettings.user
+
+.idea/
+
+*.dll
+
+OblivionEngine/resources/

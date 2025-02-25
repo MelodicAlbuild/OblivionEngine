@@ -5,6 +5,16 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotTiled" Version="0.3.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy /Y &quot;$(ProjectDir)thirdparty\SDL2\SDL2.dll&quot; &quot;$(OutDir)SDL2.dll&quot; &amp;&amp; copy /Y &quot;$(ProjectDir)thirdparty\SDL2\SDL2_image.dll&quot; &quot;$(OutDir)SDL2_image.dll&quot; &amp;&amp; copy /Y &quot;$(ProjectDir)thirdparty\SDL2\SDL2_ttf.dll&quot; &quot;$(OutDir)SDL2_ttf.dll&quot; &amp;&amp; echo D | xcopy &quot;$(ProjectDir)resources&quot; &quot;$(OutDir)resources&quot; /s /e /h /y" />
+    </Target>
 
 </Project>
