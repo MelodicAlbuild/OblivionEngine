@@ -19,7 +19,8 @@ public class OblivionInputHandler
             { SDL.SDL_Keycode.SDLK_RIGHT, Actions.MoveRight },
             { SDL.SDL_Keycode.SDLK_UP, Actions.MoveUp },
             { SDL.SDL_Keycode.SDLK_DOWN, Actions.MoveDown },
-            { SDL.SDL_Keycode.SDLK_x, Actions.Sprint }
+            { SDL.SDL_Keycode.SDLK_x, Actions.Sprint },
+            { SDL.SDL_Keycode.SDLK_p, Actions.ShowDiag }
             // Add other keybindings as needed
         };
         _keys = new Dictionary<int, int>();
@@ -28,6 +29,12 @@ public class OblivionInputHandler
     public void OnKeyDown(SDL.SDL_Event key)
     {
         _keys[(int)key.key.keysym.sym] = 1;
+
+        if (key.key.keysym.sym == SDL.SDL_Keycode.SDLK_p)
+        {
+            Game.Instance.ToggleDialogBox();
+            Game.Instance.SendDialog("This is a test dialog box. Hopefully it doesn't break.");
+        }
     }
 
     public void OnKeyUp(SDL.SDL_Event key)
@@ -76,6 +83,9 @@ public class OblivionInputHandler
                 break;
             case Actions.Sprint:
                 // Sprinting is already handled in HandleInput
+                break;
+            case Actions.ShowDiag:
+                
                 break;
             // Handle other actions as needed
         }

@@ -1,10 +1,13 @@
 ﻿using System.Data;
+using OblivionEngine.Core.Config;
 using OblivionEngine.Core.Events;
 using OblivionEngine.Core.Extras;
 using OblivionEngine.Core.Input;
+using OblivionEngine.Core.Resource;
 using OblivionEngine.GameSystems;
 using OblivionEngine.GameSystems.Anim;
 using OblivionEngine.Render;
+using OblivionEngine.Render.Dialog;
 using OblivionEngine.Render.Font;
 using OblivionEngine.Render.Objects;
 using OblivionEngine.Render.Tilemaps;
@@ -29,6 +32,9 @@ public class Game
     private OblivionTilemap _oblivionTilemap;
     private OblivionFontManager _oblivionFontManager;
     private OblivionInputHandler _oblivionInputHandler;
+    private OblivionResourceManager _oblivionResourceManager;
+    
+    private DialogBox _dialogBox;
 
     private Locations _locations;
     private Animations _animations;
@@ -41,7 +47,6 @@ public class Game
     
     private int _cameraX, _cameraY;
 
-    private Dictionary<int, int> _keys;
     private List<Object> _objects;
 
     public ILocation currentLocation;
@@ -51,12 +56,10 @@ public class Game
     public Game()
     {
         Instance = this;
-        _keys = new Dictionary<int, int>();
         _objects = new List<Object>();
         _eventManager = new OblivionEventManager();
         _oblivionRenderer = new OblivionRenderer(IntPtr.Zero);
         _oblivionTilemap = new OblivionTilemap();
-        _oblivionFontManager = new OblivionFontManager("resources/fonts/Raleway.ttf");
     }
     
     private Dictionary<SDL.SDL_Keycode, Direction> _keyBindings = new()
@@ -82,13 +85,19 @@ public class Game
 
         _oblivionRenderer = new OblivionRenderer(_renderer);
         _locations = new Locations();
-        _oblivionTilemap.LoadMap(_locations.allLocations.First(o => o.Key == 1).Value.mapPath);
-        currentLocation = _locations.allLocations.First(o => o.Key == 1).Value;
 
         _animations = new Animations();
 
         SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG);
         SDL_ttf.TTF_Init();
+        
+        _oblivionResourceManager = new OblivionResourceManager();
+        _oblivionFontManager = new OblivionFontManager("resources/fonts/Pixel.ttf");
+
+        _dialogBox = new DialogBox(_oblivionRenderer);
+        
+        _oblivionTilemap.LoadMap(_locations.allLocations.First(o => o.Key == 1).Value.mapPath);
+        currentLocation = _locations.allLocations.First(o => o.Key == 1).Value;
         
         _running = true;
         Run();
@@ -180,6 +189,8 @@ public class Game
             
         OblivionEventManager.Instance.InvokeLateDraw(this, _oblivionRenderer);
         
+        OblivionEventManager.Instance.InvokeUIDraw(this, _oblivionRenderer);
+        
         //_oblivionRenderer.DrawGrid(TILE_SIZE, DISPLAY_HEIGHT, DISPLAY_WIDTH);
         
         SDL.SDL_RenderPresent(_renderer);
@@ -208,6 +219,16 @@ public class Game
     {
         string sFps = $"Oblivion Engine: {fps} FPS";
         SDL.SDL_SetWindowTitle(_window, sFps);
+    }
+    
+    public void ToggleDialogBox()
+    {
+        _dialogBox.ToggleDialogBox();
+    }
+    
+    public void SendDialog(string dialog)
+    {
+        _dialogBox.DisplayMessage(dialog);
     }
 
     public void ChangeLocation(Location loc)
@@ -263,16 +284,6 @@ public class Game
         
         SDL.SDL_Quit();
     }
-    
-    private void OnKeyDown(SDL.SDL_Event key)
-    {
-        _keys[(int)key.key.keysym.sym] = 1;
-    }
-    
-    private void OnKeyUp(SDL.SDL_Event key)
-    {
-        _keys[(int)key.key.keysym.sym] = 0;
-    }
 
     public IntPtr GetWindow()
     {
@@ -287,5 +298,15 @@ public class Game
     public Sprite GetPlayer()
     {
         return _player;
+    }
+    
+    public Animations GetAnimations()
+    {
+        return _animations;
+    }
+    
+    public Locations GetLocations()
+    {
+        return _locations;
     }
 }

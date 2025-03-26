@@ -7,4 +7,5 @@ public enum Actions
     MoveUp,
     MoveDown,
     Sprint,
+    ShowDiag
 }

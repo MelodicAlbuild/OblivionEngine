@@ -37,6 +37,16 @@ public class OblivionEventManager
 
     #endregion
     
+    #region OnUIDraw
+
+    public event EventHandler<OblivionRenderer> OnUIDraw;
+    public void InvokeUIDraw(object sender, OblivionRenderer renderer)
+    {
+        OnUIDraw?.Invoke(sender, renderer);
+    }
+
+    #endregion
+    
     #region OnMove
 
     public event EventHandler<Direction> OnMove;
