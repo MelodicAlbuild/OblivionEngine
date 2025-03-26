@@ -10,22 +10,16 @@ public class Locations
     public Locations()
     {
         allLocations = new SortedDictionary<int, Location>();
-        LoadLocations();
     }
 
-    private void LoadLocations()
+    public void LoadLocations(List<JSONLocation> jsLocs)
     {
-        DirectoryInfo d = new DirectoryInfo("resources/locations");
-        FileInfo[] f = d.GetFiles("*.json");
-
-        foreach (FileInfo fileInfo in f)
+        foreach (JSONLocation location in jsLocs)
         {
-            JSONLocation[] locs = JsonConvert.DeserializeObject<JSONLocation[]>(fileInfo.OpenText().ReadToEnd());
-            foreach (JSONLocation location in locs)
-            {
-                allLocations.Add(location.id, new Location(location));
-            }
+            allLocations.Add(location.id, new Location(location));
         }
+        
+        Console.WriteLine(allLocations.Count);
         
         foreach (KeyValuePair<int,Location> valuePair in allLocations)
         {

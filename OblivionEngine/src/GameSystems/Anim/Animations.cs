@@ -9,18 +9,10 @@ public class Animations
     public Animations()
     {
         animations = new List<Animation>();
-        LoadAnimations();
     }
-    
-    private void LoadAnimations()
-    {
-        DirectoryInfo d = new DirectoryInfo("resources/animations");
-        FileInfo[] f = d.GetFiles("*.json");
 
-        foreach (FileInfo fileInfo in f)
-        {
-            JSONAnimation anim = JsonConvert.DeserializeObject<JSONAnimation>(fileInfo.OpenText().ReadToEnd());
-            animations.Add(new Animation(anim));
-        }
-    }
+    public void LoadAnimations(List<Animation> anims)
+    {
+        animations = anims;
+    } 
 }
