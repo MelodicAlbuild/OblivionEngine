@@ -27,7 +27,8 @@
         "Clean",
         "Compile",
         "Complete",
-        "Compress"
+        "Compress",
+        "Encrypt"
       ]
     },
     "Verbosity": {

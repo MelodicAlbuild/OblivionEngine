@@ -7,14 +7,11 @@ namespace build;
 
 public sealed partial class Build
 {
-    private static readonly AbsolutePath TotalOutputPath = RootDirectory / "OblivionEngine" / "resources" / "Oblivion.bin";
+    private static readonly AbsolutePath TotalOutputPath = RootDirectory / "OblivionEngine" / "resources" / "Oblivion_Raw.bin";
     
     private void CompressLocation()
     {
         using FileStream outputStream = new FileStream(LocationCompressedPath, FileMode.Create, FileAccess.Write);
-        
-        byte[] containerHeader = BuildContainerFileHeader("Locations.bin", LocationOutputPath.GetFiles().Count());
-        outputStream.Write(containerHeader, 0, containerHeader.Length);
         
         foreach (AbsolutePath absolutePath in LocationOutputPath.GetFiles())
         {
@@ -25,9 +22,6 @@ public sealed partial class Build
     private void CompressAnimation()
     {
         using FileStream outputStream = new FileStream(AnimationCompressPath, FileMode.Create, FileAccess.Write);
-        
-        byte[] containerHeader = BuildContainerFileHeader("Animations.bin", AnimationOutputPath.GetFiles().Count());
-        outputStream.Write(containerHeader, 0, containerHeader.Length);
         
         foreach (AbsolutePath absolutePath in AnimationOutputPath.GetFiles())
         {
@@ -42,8 +36,8 @@ public sealed partial class Build
         byte[] containerHeader = BuildContainerFileHeader("Oblivion.bin", 2);
         outputStream.Write(containerHeader, 0, containerHeader.Length);
         
-        WriteFileWithHeader(AnimationCompressPath, outputStream);
-        WriteFileWithHeader(LocationCompressedPath, outputStream);
+        WriteContainerFileWithHeader(AnimationCompressPath, outputStream, AnimationOutputPath.GetFiles().Count());
+        WriteContainerFileWithHeader(LocationCompressedPath, outputStream, LocationOutputPath.GetFiles().Count());
     }
     
     private void WriteFileWithHeader(string inputFile, FileStream outputStream)
@@ -64,6 +58,14 @@ public sealed partial class Build
         byte[] headerBytes = header.ToBytes();
         outputStream.Write(headerBytes, 0, headerBytes.Length);
 
+        using (FileStream inputStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
+        {
+            inputStream.CopyTo(outputStream);
+        }
+    }
+    
+    private void WriteFileAcross(string inputFile, FileStream outputStream)
+    {
         using (FileStream inputStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
         {
             inputStream.CopyTo(outputStream);

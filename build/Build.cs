@@ -13,10 +13,12 @@ public sealed partial class Build : NukeBuild
 
     public Target Compress => _ => _.After(Clean).Before(Complete).Executes(CompressAnimation, CompressLocation);
 
-    public Target Complete => _ => _.After(Compress).Executes(CompressAll);
+    public Target Complete => _ => _.After(Compress).Before(Encrypt).Executes(CompressAll);
+    
+    public Target Encrypt => _ => _.After(Complete).Executes(EncryptOutput);
 
     public static int Main()
     {
-        return Execute<Build>(x => x.Clean, x => x.Compile, x => x.Compress, x => x.Complete);
+        return Execute<Build>(x => x.Clean, x => x.Compile, x => x.Compress, x => x.Complete, x => x.Encrypt);
     }
 }
