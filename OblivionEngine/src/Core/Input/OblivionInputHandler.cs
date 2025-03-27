@@ -8,9 +8,9 @@ public class OblivionInputHandler
 {
     private Dictionary<SDL.SDL_Keycode, Actions> _keyBindings;
     private Dictionary<int, int> _keys;
-    private Sprite _player;
+    private Player _player;
 
-    public OblivionInputHandler(Sprite player)
+    public OblivionInputHandler(Player player)
     {
         _player = player;
         _keyBindings = new Dictionary<SDL.SDL_Keycode, Actions>

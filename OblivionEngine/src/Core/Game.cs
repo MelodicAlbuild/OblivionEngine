@@ -39,7 +39,7 @@ public class Game
     private Locations _locations;
     private Animations _animations;
 
-    private Sprite _player;
+    private Player _player;
     
     private int DISPLAY_WIDTH = 640;
     private int DISPLAY_HEIGHT = 360;
@@ -105,12 +105,12 @@ public class Game
 
     private void CreateSprites()
     {
-        Sprite player = new Sprite(true, _oblivionRenderer, true, _animations.animations[0], "");
+        Player player = new Player(_oblivionRenderer, _animations.animations[0]);
         player.SetTilePosition(27, 9);
         _objects.Add(player);
         _player = player;
         
-        Sprite npc = new Sprite(false, _oblivionRenderer, true, _animations.animations[1], "");
+        NPC npc = new NPC(_oblivionRenderer, _animations.animations[1]);
         npc.SetTilePosition(29, 9);
         npc.SetAnimDirection(Direction.Down);
         _objects.Add(npc);
