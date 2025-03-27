@@ -110,7 +110,7 @@ public class Game
         _objects.Add(player);
         _player = player;
         
-        NPC npc = new NPC(_oblivionRenderer, _animations.animations[1]);
+        Character npc = new Character(_oblivionRenderer, _animations.animations[1]);
         npc.SetTilePosition(29, 9);
         npc.SetAnimDirection(Direction.Down);
         _objects.Add(npc);

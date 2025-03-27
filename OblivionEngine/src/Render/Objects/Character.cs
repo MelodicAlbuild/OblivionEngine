@@ -7,7 +7,7 @@ using SDL2;
 
 namespace OblivionEngine.Render.Objects;
 
-public class NPC : Sprite
+public class Character : Sprite
 {
     private Direction _aD;
     private Dictionary<Direction, List<Vector4>> _animations;
@@ -17,7 +17,7 @@ public class NPC : Sprite
     private int _currentFrame = 0;
     private uint startingTicks = 0;
     
-    public NPC(OblivionRenderer renderer, Animation animation)
+    public Character(OblivionRenderer renderer, Animation animation)
     {
         _animations = new Dictionary<Direction, List<Vector4>>();
 
