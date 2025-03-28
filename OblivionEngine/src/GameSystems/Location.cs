@@ -15,6 +15,7 @@ public class Location : ILocation
     public List<Location> connections;
 
     public string mapPath;
+    public string npcPath;
     
     private JSONLocation jsLoc;
 
@@ -57,6 +58,7 @@ public class Location : ILocation
         };
 
         mapPath = $"resources/tilemaps/{zoneStr}/{typeStr}/{name.Replace(" ", "")}.tmx";
+        npcPath = $"resources/tilemaps/{zoneStr}/{typeStr}/{name.Replace(" ", "")}.npcs.lua";
         
         foreach (JSONBuilding jsLocBuilding in jsLoc.buildings)
         {

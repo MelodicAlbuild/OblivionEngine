@@ -4,6 +4,7 @@ using OblivionEngine.Core.Events;
 using OblivionEngine.Core.Extras;
 using OblivionEngine.Core.Input;
 using OblivionEngine.Core.Resource;
+using OblivionEngine.Core.Script;
 using OblivionEngine.GameSystems;
 using OblivionEngine.GameSystems.Anim;
 using OblivionEngine.Render;
@@ -33,6 +34,7 @@ public class Game
     private OblivionFontManager _oblivionFontManager;
     private OblivionInputHandler _oblivionInputHandler;
     private OblivionResourceManager _oblivionResourceManager;
+    private OblivionLuaManager _oblivionLuaManager;
     
     private DialogBox _dialogBox;
 
@@ -93,11 +95,15 @@ public class Game
         
         _oblivionResourceManager = new OblivionResourceManager();
         _oblivionFontManager = new OblivionFontManager("resources/fonts/Pixel.ttf");
+        
+        _oblivionLuaManager = new OblivionLuaManager();
 
         _dialogBox = new DialogBox(_oblivionRenderer);
         
         _oblivionTilemap.LoadMap(_locations.allLocations.First(o => o.Key == 1).Value.mapPath);
         currentLocation = _locations.allLocations.First(o => o.Key == 1).Value;
+        
+        _oblivionLuaManager.LoadNPCs((currentLocation as Location).npcPath);
         
         _running = true;
         Run();
@@ -109,11 +115,14 @@ public class Game
         player.SetTilePosition(27, 9);
         _objects.Add(player);
         _player = player;
-        
-        Character npc = new Character(_oblivionRenderer, _animations.animations[1]);
-        npc.SetTilePosition(29, 9);
-        npc.SetAnimDirection(Direction.Down);
-        _objects.Add(npc);
+    }
+
+    public void CreateNPC(LuaNPC npc)
+    {
+        Character sNpc = new Character(_oblivionRenderer, _animations.animations[npc.AnimId]);
+        sNpc.SetTilePosition((int)npc.X, (int)npc.Y);
+        sNpc.SetAnimDirection((Direction)npc.Facing);
+        _objects.Add(sNpc);
     }
     
     private int alpha = 0;
@@ -236,22 +245,24 @@ public class Game
         
     }
 
-    public void EnterBuilding(Building building)
+    public async void EnterBuilding(Building building)
     {
         _isTransitioning = true;
         _player.SetFreeze();
         _oblivionTilemap.LoadMap(building.mapPath);
+        _oblivionLuaManager.LoadNPCs(building.parent.npcPath);
         _player.SetTilePosition((int)(building.spawn.X), (int)(building.spawn.Y));
         _player.NoKeysPressed();
         currentLocation = building;
         _isTransitioning = false;
     }
 
-    public void ExitBuilding(Building building)
+    public async void ExitBuilding(Building building)
     {
         _isTransitioning = true;
         _player.SetFreeze();
         _oblivionTilemap.LoadMap(building.parent.mapPath);
+        _oblivionLuaManager.LoadNPCs(building.parent.npcPath);
         _player.SetTilePosition((int)(building.exitPos.X), (int)(building.exitPos.Y));
         _player.NoKeysPressed();
         currentLocation = building.parent;
